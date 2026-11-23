@@ -108,6 +108,21 @@ ConfigLoaderBuilder.default()
 The `default` method on `ConfigLoaderBuilder` sets up recommended defaults. If you wish to start with a completely empty
 config builder, then use `ConfigLoaderBuilder.empty()`.
 
+`default()` also enables implicit property sources: environment variables, JVM system properties,
+`~/.userconfig.<ext>`, and `$XDG_CONFIG_HOME/hoplite.<ext>` (when `XDG_CONFIG_HOME` is set).
+Existing files in those locations can influence configuration even when you only add explicit
+application resources. The file sources consider extensions registered by available parser modules.
+
+To use only explicitly selected sources while keeping the default decoders, parsers,
+preprocessors, and other configuration, use `defaultWithoutPropertySources()`:
+
+```kotlin
+ConfigLoaderBuilder.defaultWithoutPropertySources()
+  .addResourceSource("/application-prod.yml")
+  .build()
+  .loadConfigOrThrow<MyConfig>()
+```
+
 There are two ways to retrieve a populated data class from config. The first is to throw an exception if the config
 could not be resolved. We do this via the `loadConfigOrThrow<T>` function. Another is to return a `ConfigResult` validation
 monad via the `loadConfig<T>` function if you want to handle errors manually.
