@@ -14,13 +14,13 @@ import kotlin.io.path.inputStream
 
 /**
  * An implementation of [PropertySource] that provides config through a config file
- * defined at $XDG_CONFIG_HOME/.userconfig.ext
+ * defined at $XDG_CONFIG_HOME/hoplite.ext (when XDG_CONFIG_HOME is set)
  *
  * This file must use either the java properties format, or another format that you
  * have included the correct module for.
  *
  * Eg, if you have included hoplite-yaml module in your build, then your file can be
- * $XDG_CONFIG_HOME/.userconfig.yaml
+ * $XDG_CONFIG_HOME/hoplite.yaml
  */
 object XdgConfigPropertySource : PropertySource {
 
